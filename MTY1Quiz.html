@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematik Tahun 1 - Kuiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f0f9ff;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239ee6ff' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .option {
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            transform: scale(1.03);
+        }
+
+        .correct {
+            background-color: #86efac !important;
+            border-color: #16a34a !important;
+        }
+
+        .incorrect {
+            background-color: #fca5a5 !important;
+            border-color: #dc2626 !important;
+        }
+
+        .disabled {
+            pointer-events: none;
+        }
+
+        .certificate {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23bae6fd' fill-opacity='0.49' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .ribbon {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .ribbon-content {
+            position: absolute;
+            display: block;
+            width: 200px;
+            padding: 15px 0;
+            background-color: #3b82f6;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+            color: #fff;
+            font-size: 18px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+            text-transform: uppercase;
+            text-align: center;
+            left: -25px;
+            top: 30px;
+            transform: rotate(-45deg);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="max-w-md w-full bg-white rounded-xl shadow-lg p-6 mb-4 text-center">
+        <div class="flex justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-blue-500" viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                    d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+            </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">Matematik Tahun 1</h1>
+        <p class="text-gray-600 mb-6">Selamat datang ke kuiz matematik yang menyeronokkan! Mari kita uji pengetahuan
+            matematik kamu!</p>
+        <div class="mb-4">
+            <label for="student-name" class="block text-sm font-medium text-gray-700 mb-1">Nama Anda:</label>
+            <input type="text" id="student-name"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Masukkan nama anda">
+        </div>
+        <button id="start-quiz"
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+            Mula Kuiz
+        </button>
+    </div>
+
+    <!-- Quiz Container -->
+    <div id="quiz-container" class="max-w-md w-full bg-white rounded-xl shadow-lg p-6 mb-4 hidden">
+        <div class="flex justify-between items-center mb-6">
+            <div class="text-sm font-medium text-gray-500" id="progress-text">Soalan 1 / 30</div>
+            <div class="text-sm font-medium text-blue-600" id="score-text">Markah: 0 / 30</div>
+        </div>
+
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+            <div id="progress-bar" class="bg-blue-500 h-2.5 rounded-full" style="width: 20%"></div>
+        </div>
+
+        <div id="question-container" class="mb-6">
+            <h2 id="question-text" class="text-xl font-bold text-gray-800 mb-4">Soalan akan dipaparkan di sini</h2>
+            <div id="question-image" class="flex justify-center mb-4 hidden"></div>
+            <div id="options-container" class="space-y-3">
+                <!-- Options will be inserted here -->
+            </div>
+        </div>
+
+        <div id="feedback" class="p-3 rounded-lg mb-4 text-center hidden"></div>
+
+        <button id="next-button"
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed hidden">
+            Soalan Seterusnya
+        </button>
+    </div>
+
+    <!-- Results Summary -->
+    <div id="results-container" class="max-w-md w-full bg-white rounded-xl shadow-lg p-6 mb-4 hidden">
+        <div class="text-center">
+            <div class="inline-block p-4 rounded-full bg-blue-100 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Tahniah!</h2>
+            <p id="final-score" class="text-lg text-gray-600 mb-4">Anda mendapat markah: 0 / 30</p>
+            <p id="result-message" class="text-gray-600 mb-6">Mesej akan dipaparkan di sini</p>
+
+            <div class="space-y-3">
+                <button id="view-certificate"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 hidden">
+                    Lihat Sijil
+                </button>
+                <button id="try-again"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                    Cuba Lagi
+                </button>
+                <a href="./index.html"
+                    class="btn bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-xl text-lg mt-4 inline-block">
+                    ⬅️ Kembali ke Laman Utama
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate View -->
+    <div id="certificate-container" class="max-w-2xl w-full bg-white rounded-xl shadow-lg p-6 mb-4 hidden">
+        <div id="certificate" class="certificate relative border-8 border-blue-200 rounded-lg p-8 text-center">
+            <div class="ribbon">
+                <span class="ribbon-content">Tahniah!</span>
+            </div>
+            <div class="pt-16">
+                <h2 class="text-3xl font-bold text-blue-800 mb-4">Sijil Pencapaian</h2>
+                <p class="text-xl mb-2">Dianugerahkan kepada</p>
+                <p id="certificate-name" class="text-2xl font-bold text-blue-600 mb-4">Nama Pelajar</p>
+                <p class="text-lg mb-6">kerana berjaya mendapat markah penuh dalam</p>
+                <p class="text-xl font-bold text-blue-800 mb-6">Kuiz Matematik Tahun 1</p>
+                <div class="flex justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-yellow-500" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <p id="certificate-date" class="text-gray-600">Tarikh: 1 Januari 2023</p>
+            </div>
+        </div>
+        <div class="flex justify-center space-x-4 mt-6">
+            <button id="download-certificate"
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                Muat Turun Sijil
+            </button>
+            <button id="back-to-summary"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                Kembali ke Ringkasan
+            </button>
+            <a href="./index.html"
+                class="btn bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-xl text-lg mt-4 inline-block">
+                ⬅️ Kembali ke Laman Utama
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // All math questions for Year 1 based on KSSR Semakan 2017
+        const allQuestions = [
+            {
+                question: "Berapakah 3 + 4?",
+                options: ["5", "6", "7", "8"],
+                answer: 2
+            },
+            {
+                question: "Berapakah 10 - 3?",
+                options: ["5", "6", "7", "8"],
+                answer: 2
+            },
+            {
+                question: "Berapakah 2 + 5?",
+                options: ["6", "7", "8", "9"],
+                answer: 1
+            },
+            {
+                question: "Berapakah 4 - 1?",
+                options: ["2", "3", "4", "5"],
+                answer: 1
+            },
+            {
+                question: "Berapakah 5 - 2?",
+                options: ["2", "3", "4", "5"],
+                answer: 1
+            },
+
+            {
+                question: "Berapakah bilangan segi empat dalam gambar ini?",
+                image: `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 200 100">
+                    <rect x="20" y="20" width="40" height="40" fill="#4ade80" stroke="#000" stroke-width="2"/>
+                    <rect x="80" y="20" width="40" height="40" fill="#60a5fa" stroke="#000" stroke-width="2"/>
+                    <rect x="140" y="20" width="40" height="40" fill="#f87171" stroke="#000" stroke-width="2"/>
+                </svg>`,
+                options: ["1", "2", "3", "4"],
+                answer: 2
+            },
+            {
+                question: "Berapakah 7 + 2?",
+                options: ["8", "9", "10", "11"],
+                answer: 1
+            },
+            {
+                question: "Berapakah 3 - 1?",
+                options: ["1", "2", "3", "4"],
+                answer: 1
+            },
+            {
+                question: "Berapakah bilangan segi tiga dalam gambar ini?",
+                image: `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 200 100">
+                    <polygon points="20,80 60,20 100,80" fill="#4ade80" stroke="#000" stroke-width="2"/>
+                    <polygon points="100,80 140,20 180,80" fill="#60a5fa" stroke="#000" stroke-width="2"/>
+                    <polygon points="60,80 100,20 140,80" fill="#f87171" stroke="#000" stroke-width="2"/>
+                </svg>`,
+                options: ["2", "3", "4", "5"],
+                answer: 1
+            },
+            {
+                question: "Manakah nombor yang terbesar?",
+                options: ["12", "9", "15", "7"],
+                answer: 2
+            },
+            {
+                question: "Berapakah 5 + 5?",
+                options: ["5", "10", "15", "20"],
+                answer: 1
+            },
+            {
+                question: "Berapakah 8 - 5?",
+                options: ["2", "3", "4", "5"],
+                answer: 1
+            },
+            {
+                question: "Berapakah bilangan bulatan dalam gambar ini?",
+                image: `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 200 100">
+                    <circle cx="40" cy="50" r="20" fill="#4ade80" stroke="#000" stroke-width="2"/>
+                    <circle cx="100" cy="50" r="20" fill="#60a5fa" stroke="#000" stroke-width="2"/>
+                    <circle cx="160" cy="50" r="20" fill="#f87171" stroke="#000" stroke-width="2"/>
+                </svg>`,
+                options: ["2", "3", "4", "5"],
+                answer: 1
+            },
+            {
+                question: "Berapakah 2 + 6?",
+                options: ["6", "7", "8", "9"],
+                answer: 2
+            },
+            {
+                question: "Manakah nombor yang terkecil?",
+                options: ["12", "9", "15", "7"],
+                answer: 3
+            },
+            {
+                question: "Berapakah 9 - 4?",
+                options: ["3", "4", "5", "6"],
+                answer: 2
+            },
+            { question: "Nombor selepas 19 ialah?", options: ["18", "20", "21", "22"], answer: 1 },
+            { question: "Nombor sebelum 41 ialah?", options: ["40", "42", "39", "38"], answer: 0 },
+            { question: "Nombor selepas 29 ialah?", options: ["28", "30", "31", "39"], answer: 1 },
+            { question: "Nombor sebelum 56 ialah?", options: ["55", "54", "57", "65"], answer: 0 },
+            { question: "Nombor yang paling besar?", options: ["14", "45", "36", "22"], answer: 1 },
+            { question: "Nombor yang paling kecil?", options: ["60", "22", "39", "15"], answer: 3 },
+            { question: "Tambah 10 pada 32 ialah?", options: ["42", "40", "44", "33"], answer: 0 },
+            { question: "Berapakah 7 + 5?", options: ["10", "11", "12", "13"], answer: 2 },
+            { question: "Berapakah 15 + 3?", options: ["18", "16", "17", "19"], answer: 0 },
+            { question: "Berapakah 20 + 4?", options: ["24", "22", "25", "26"], answer: 0 },
+            { question: "Berapakah 10 - 6?", options: ["3", "4", "5", "6"], answer: 1 },
+            { question: "Berapakah 18 - 9?", options: ["8", "9", "10", "7"], answer: 1 },
+            { question: "Berapakah 25 - 5?", options: ["20", "21", "19", "22"], answer: 0 },
+            { question: "Yang manakah bentuk segitiga?", options: ["🔺", "⚫", "⬛", "🟦"], answer: 0 },
+            { question: "Yang manakah bentuk bulat?", options: ["⬜", "🟥", "⚫", "⬟"], answer: 2 },
+            { question: "Bentuk manakah mempunyai 4 sisi?", options: ["Bulat", "Segi empat", "Segitiga", "Oval"], answer: 1 },
+            { question: "Berapakah jumlah 50 sen + 20 sen?", options: ["70 sen", "60 sen", "80 sen", "90 sen"], answer: 0 },
+            { question: "Kamu ada RM1 dan RM2. Berapakah jumlah yang kamu ada?", options: ["RM3", "RM2", "RM1", "RM4"], answer: 0 },
+            { question: "Berapa jam dalam 1 hari?", options: ["12", "18", "24", "10"], answer: 2 },
+            { question: "Hari selepas Isnin ialah?", options: ["Ahad", "Rabu", "Selasa", "Khamis"], answer: 2 },
+            { question: "Yang manakah lebih panjang?", options: ["Pensel", "Pembaris", "Pemadam", "Buku"], answer: 1 },
+            { question: "Yang manakah lebih berat?", options: ["Bulu", "Kerusi", "Kertas", "Pemadam"], answer: 1 },
+            { question: "Nombor selepas 4 ialah?", options: ["5", "6", "3", "2"], answer: 0 },
+            { question: "Berapa kaki seekor anjing?", options: ["2", "3", "4", "6"], answer: 2 },
+            { question: "Berapa jari kamu ada?", options: ["8", "9", "10", "12"], answer: 2 },
+            { question: "Hari sebelum Jumaat ialah?", options: ["Khamis", "Isnin", "Ahad", "Selasa"], answer: 0 },
+            { question: "Berapakah 8 + 7?", options: ["14", "15", "16", "17"], answer: 1 },
+            { question: "Berapakah 20 - 8?", options: ["11", "12", "13", "14"], answer: 1 },
+            { question: "Tambah 5 pada 11 ialah?", options: ["15", "16", "17", "18"], answer: 0 },
+            { question: "Nombor genap antara pilihan berikut:", options: ["13", "14", "15", "17"], answer: 1 },
+            { question: "Nombor ganjil antara pilihan berikut:", options: ["22", "24", "25", "26"], answer: 2 },
+            { question: "Berapakah 6 + 3?", options: ["8", "9", "10", "11"], answer: 1 },
+            { question: "Berapakah 15 - 5?", options: ["8", "9", "10", "11"], answer: 2 },
+            { question: "Berapakah 4 + 4?", options: ["6", "7", "8", "9"], answer: 2 },
+            { question: "Berapakah 12 - 3?", options: ["8", "9", "10", "11"], answer: 1 },
+            { question: "Berapakah bilangan jari di tangan?", options: ["5", "6", "7", "8"], answer: 0 },
+            { question: "Berapakah bilangan jari di kaki?", options: ["5", "6", "7", "10"], answer: 3 },
+            { question: "Berapakah 10 + 10?", options: ["15", "20", "25", "30"], answer: 1 },
+            { question: "Berapakah 30 - 10?", options: ["15", "20", "25", "30"], answer: 1 },
+            { question: "Tambah 4 pada 6 ialah?", options: ["9", "10", "11", "12"], answer: 1 },
+            { question: "Hari pertama dalam seminggu?", options: ["Ahad", "Isnin", "Selasa", "Rabu"], answer: 0 },
+            { question: "Berapakah jumlah 30 + 20?", options: ["40", "50", "60", "70"], answer: 1 },
+            { question: "Berapakah 50 - 25?", options: ["20", "25", "30", "15"], answer: 1 },
+            { question: "Tambah 6 pada 9 ialah?", options: ["15", "14", "13", "16"], answer: 0 },
+            { question: "Berapakah 12 - 4?", options: ["6", "7", "8", "9"], answer: 2 },
+            { question: "Yang manakah bentuk tiga sisi?", options: ["Bulat", "Segitiga", "Segi empat", "Segi lima"], answer: 1 },
+            { question: "Apakah nilai wang RM2 + RM5?", options: ["RM5", "RM6", "RM7", "RM8"], answer: 2 },
+            { question: "Berapa hari dalam seminggu?", options: ["5", "6", "7", "8"], answer: 2 },
+            { question: "Tambah 2 pada 48 ialah?", options: ["49", "50", "51", "52"], answer: 1 },
+            { question: "Nombor antara 30 dan 32 ialah?", options: ["29", "30", "31", "33"], answer: 2 },
+            { question: "Hari terakhir dalam seminggu?", options: ["Sabtu", "Ahad", "Jumaat", "Rabu"], answer: 1 },
+            { question: "Berapa minit dalam 1 jam?", options: ["30", "60", "45", "90"], answer: 1 },
+            { question: "Berapakah 14 - 6?", options: ["6", "7", "8", "9"], answer: 1 },
+            { question: "Berapakah 3 + 3?", options: ["5", "6", "7", "8"], answer: 1 },
+            { question: "Berapakah 16 - 8?", options: ["6", "7", "8", "9"], answer: 2 },
+            { question: "Berapakah bilangan sisi segi empat?", options: ["2", "3", "4", "5"], answer: 2 },
+            { question: "Berapakah bilangan sisi segitiga?", options: ["2", "3", "4", "5"], answer: 1 },
+            { question: "Berapakah bilangan sisi bulatan?", options: ["0", "1", "2", "3"], answer: 0 },
+            { question: "Berapakah bilangan sisi segi lima?", options: ["4", "5", "6", "7"], answer: 1 },
+            { question: "Berapakah 5 + 9?", options: ["13", "14", "15", "16"], answer: 1 },
+            { question: "Berapakah 17 - 8?", options: ["8", "9", "10", "11"], answer: 1 },
+            { question: "Berapakah hasil tambah 6 dan 7?", options: ["11", "12", "13", "14"], answer: 2 },
+            { question: "Nombor ganjil antara pilihan berikut:", options: ["12", "18", "25", "36"], answer: 2 },
+            { question: "Yang manakah nombor genap?", options: ["13", "17", "22", "25"], answer: 2 },
+            { question: "Berapakah 3 + 8?", options: ["10", "11", "12", "13"], answer: 1 },
+            { question: "Berapakah 15 - 6?", options: ["9", "8", "10", "11"], answer: 0 },
+            { question: "Berapakah 9 + 6?", options: ["15", "16", "14", "13"], answer: 0 },
+            { question: "Apakah nilai syiling 20 sen + 10 sen?", options: ["20 sen", "30 sen", "40 sen", "50 sen"], answer: 1 },
+            { question: "RM1 + RM5 ialah?", options: ["RM5", "RM6", "RM7", "RM4"], answer: 1 },
+            { question: "Yang manakah lebih ringan?", options: ["Batu", "Meja", "Buku", "Bulu ayam"], answer: 3 },
+            { question: "Berapakah jumlah 2 + 2 + 2?", options: ["4", "5", "6", "8"], answer: 2 },
+            { question: "Yang manakah bentuk empat sisi sama panjang?", options: ["Segi empat sama", "Segitiga", "Bulat", "Oval"], answer: 0 },
+            { question: "Terdapat ___ hari dalam bulan Februari (biasa).", options: ["30", "31", "28", "27"], answer: 2 },
+            { question: "Berapakah 4 + 4 + 4?", options: ["10", "12", "14", "11"], answer: 1 },
+            { question: "Berapakah 10 - 3 - 2?", options: ["5", "6", "7", "8"], answer: 1 },
+            { question: "Berapakah hasil tolak 20 - 5 - 5?", options: ["15", "10", "20", "5"], answer: 1 },
+            { question: "Berapakah 10 + 10 + 5?", options: ["20", "25", "15", "30"], answer: 1 },
+            { question: "Berapakah 50 - 20?", options: ["30", "20", "40", "10"], answer: 0 },
+            { question: "Berapakah 14 - 7?", options: ["6", "7", "8", "9"], answer: 1 },
+            { question: "Yang manakah bukan nombor?", options: ["10", "tiga", "5", "dua"], answer: 1 },
+            { question: "Berapakah 11 + 0?", options: ["0", "10", "11", "12"], answer: 2 },
+            { question: "Berapakah 20 - 10?", options: ["5", "10", "15", "20"], answer: 1 },
+            { question: "Berapakah bilangan hari dalam bulan Mac?", options: ["28", "30", "31", "29"], answer: 2 },
+            { question: "Berapakah bilangan hari dalam bulan April?", options: ["28", "30", "31", "29"], answer: 1 },
+            { question: "Berapakah bilangan hari dalam bulan Mei?", options: ["28", "30", "31", "29"], answer: 2 },
+            { question: "Berapakah bilangan hari dalam bulan Jun?", options: ["28", "30", "31", "29"], answer: 1 },
+            { question: "Berapakah bilangan hari dalam bulan Julai?", options: ["28", "30", "31", "29"], answer: 2 },
+            { question: "Berapakah bilangan hari dalam bulan Ogos?", options: ["28", "30", "31", "29"], answer: 2 },
+            { question: "Berapakah bilangan hari dalam bulan September?", options: ["28", "30", "31", "29"], answer: 1 },
+            { question: "Berapakah bilangan hari dalam bulan Oktober?", options: ["28", "30", "31", "29"], answer: 2 },
+            { question: "Berapakah bilangan hari dalam bulan November?", options: ["28", "30", "31", "29"], answer: 1 },
+            { question: "Berapakah bilangan hari dalam bulan Disember?", options: ["28", "30", "31", "29"], answer: 2 },
+            { question: "Pukul berapa selepas pukul 8 pagi?", options: ["9 pagi", "10 pagi", "7 pagi", "6 pagi"], answer: 0 },
+            { question: "Pukul berapa sebelum pukul 3 petang?", options: ["2 petang", "1 petang", "4 petang", "5 petang"], answer: 0 },
+            {
+                question: "Ali mempunyai 6 biji epal. Ibunya memberi 4 biji lagi. Berapakah jumlah epal yang dimiliki oleh Ali sekarang?",
+                options: ["9", "10", "11", "12"],
+                answer: 1
+            },
+            {
+                question: "Siti mempunyai 10 buku. Dia memberi 3 buku kepada rakannya. Berapa banyak buku yang tinggal pada Siti?",
+                options: ["6", "7", "8", "9"],
+                answer: 1
+            },
+            {
+                question: "Dalam sebuah kotak terdapat 15 bola. Kemudian ditambah 5 bola lagi. Berapakah jumlah bola semuanya?",
+                options: ["18", "19", "20", "21"],
+                answer: 2
+            },
+            {
+                question: "Kakak membeli 3 kotak pensil. Setiap kotak mengandungi 4 pensil. Berapa banyak pensil yang dibeli kakak?",
+                options: ["10", "11", "12", "13"],
+                answer: 2
+            },
+            {
+                question: "Bapa membeli 2 kilogram beras. Setiap kilogram beras berharga RM2. Berapakah jumlah bayaran yang perlu dibuat oleh bapa?",
+                options: ["RM2", "RM3", "RM4", "RM5"],
+                answer: 2
+            },
+            {
+                question: "Dalam sebuah kelas terdapat 25 murid. 10 murid keluar ke kantin. Berapa banyak murid yang masih berada di dalam kelas?",
+                options: ["12", "13", "14", "15"],
+                answer: 1
+            },
+            {
+                question: "Siti mempunyai RM20. Dia membeli buku berharga RM8. Berapakah baki wang Siti?",
+                options: ["RM10", "RM11", "RM12", "RM13"],
+                answer: 1
+            },
+            {
+                question: "Siti membaca 5 muka surat buku pada waktu pagi dan 3 muka surat lagi pada waktu malam. Berapa muka surat yang telah dibaca oleh Siti?",
+                options: ["6", "7", "8", "9"],
+                answer: 2
+            },
+            {
+                question: "Ahmad ada 12 gula-gula. Dia memberi 5 kepada rakannya. Berapakah gula-gula yang tinggal pada Ahmad?",
+                options: ["5", "6", "7", "8"],
+                answer: 2
+            },
+            {
+                question: "Terdapat 20 orang murid dalam kelas. 8 orang murid keluar rehat. Berapakah bilangan murid yang masih berada di dalam kelas?",
+                options: ["10", "11", "12", "13"],
+                answer: 2
+            },
+            {
+                question: "Ibu membeli 2 bungkus nasi lemak pada harga RM3 setiap satu. Berapakah jumlah bayaran yang ibu perlu buat?",
+                options: ["RM3", "RM5", "RM6", "RM7"],
+                answer: 2
+            },
+            {
+                question: "Raju ada 15 batang pensel. Dia meminjamkan 7 batang kepada kawannya. Berapa batang pensel yang tinggal?",
+                options: ["7", "8", "9", "10"],
+                answer: 1
+            },
+            {
+                question: "Dalam sebuah kotak ada 9 bola. Kemudian ditambah 6 bola lagi. Berapakah jumlah bola semuanya?",
+                options: ["14", "15", "16", "17"],
+                answer: 1
+            },
+            {
+                question: "Nina mempunyai RM10. Dia membeli sebatang pemadam berharga RM3. Berapakah baki wang Nina?",
+                options: ["RM6", "RM7", "RM8", "RM9"],
+                answer: 1
+            },
+            {
+                question: "Dalam perpustakaan terdapat 40 buah buku. 18 daripadanya dipinjam oleh murid. Berapa buah buku yang masih ada di perpustakaan?",
+                options: ["20", "21", "22", "23"],
+                answer: 2
+            },
+            {
+                question: "Sebuah bas membawa 25 orang penumpang. Di hentian seterusnya, 9 orang turun. Berapa orang masih berada dalam bas?",
+                options: ["15", "16", "17", "18"],
+                answer: 1
+            },
+            {
+                question: "Antara pensel dan pembaris, yang manakah lebih panjang?",
+                options: ["Pensel", "Pembaris", "Pemadam", "Buku"],
+                answer: 1
+            },
+            {
+                question: "Objek manakah biasanya paling pendek?",
+                options: ["Buku", "Meja", "Pemadam", "Kerusi"],
+                answer: 2
+            },
+            {
+                question: "Apakah alat yang digunakan untuk mengukur panjang?",
+                options: ["Penimbang", "Jam", "Pembaris", "Kalkulator"],
+                answer: 2
+            },
+            {
+                question: "Apakah unit ukuran panjang yang biasa digunakan?",
+                options: ["Liter", "Meter", "Kilogram", "Saat"],
+                answer: 1
+            },
+            {
+                question: "Berapakah 30cm + 20cm?",
+                options: ["40cm", "50cm", "60cm", "70cm"],
+                answer: 1
+            },
+            {
+                question: "Objek manakah lebih panjang daripada pemadam?",
+                options: ["Pensel", "Batu", "Guli", "Syiling"],
+                answer: 0
+            },
+            {
+                question: "Unit ukuran panjang ialah:",
+                options: ["ml", "g", "m", "kg"],
+                answer: 2
+            },
+            {
+                question: "Antara berikut, yang manakah digunakan untuk mengukur panjang tali?",
+                options: ["Pita pengukur", "Cawan", "Sudip", "Jam randik"],
+                answer: 0
+            },
+            {
+                question: "Berapakah panjang jika kita tambah 1m dan 2m?",
+                options: ["2m", "3m", "4m", "5m"],
+                answer: 1
+            },
+            {
+                question: "Yang manakah paling panjang?",
+                options: ["Meja", "Kerusi", "Pembaris", "Pensel"],
+                answer: 0
+            },
+            {
+                question: "Ali mempunyai 10 biji gula-gula. Dia ingin membahagikan sama rata kepada 2 orang kawannya. Berapa biji setiap seorang akan dapat?",
+                options: ["4", "5", "6", "10"],
+                answer: 1
+            },
+            {
+                question: "Cikgu membawa 3 kotak pensel. Setiap kotak ada 5 batang pensel. Berapa batang pensel semuanya?",
+                options: ["10", "15", "20", "12"],
+                answer: 1
+            },
+            {
+                question: "Siti mempunyai 20 biji gula-gula. Dia makan 5 biji dan beri 7 biji kepada adik. Berapa biji gula-gula yang tinggal?",
+                options: ["7", "8", "9", "10"],
+                answer: 2
+            },
+            {
+                question: "Jika hari ini ialah hari Isnin, apakah hari selepas dua hari lagi?",
+                options: ["Selasa", "Rabu", "Khamis", "Jumaat"],
+                answer: 2
+            },
+            {
+                question: "Raju membeli 2 pensel pada harga RM1 setiap satu dan sebuah buku berharga RM3. Berapa jumlah wang yang dibelanjakan?",
+                options: ["RM3", "RM4", "RM5", "RM6"],
+                answer: 2
+            },
+            {
+                question: "Ali menyusun 4 kerusi dalam 3 barisan. Berapa jumlah kerusi semuanya?",
+                options: ["7", "10", "12", "8"],
+                answer: 2
+            },
+            {
+                question: "Sebuah bas membawa 15 murid. Di hentian pertama, 5 orang turun dan 3 orang naik. Berapa jumlah murid sekarang?",
+                options: ["13", "12", "14", "11"],
+                answer: 0
+            },
+            {
+                question: "Ibu membeli 6 biji epal dan 4 biji oren. Berapa jumlah buah yang dibeli ibu?",
+                options: ["9", "10", "11", "12"],
+                answer: 1
+            },
+            {
+                question: "Terdapat 24 pensel. Jika dibahagi sama rata kepada 6 murid, setiap murid dapat berapa batang pensel?",
+                options: ["3", "4", "5", "6"],
+                answer: 1
+            },
+            {
+                question: "Nina mempunyai RM10. Dia membeli sebatang pembaris berharga RM3 dan sebatang pensel berharga RM2. Berapakah baki wangnya?",
+                options: ["RM5", "RM6", "RM4", "RM7"],
+                answer: 0
+            },
+            {
+                question: "Terdapat 5 kotak. Setiap kotak mempunyai 4 biji bola. Berapa biji bola semuanya?",
+                options: ["20", "25", "15", "30"],
+                answer: 0
+            },
+            {
+                question: "Amin ada RM10. Dia membeli pensel RM2, pemadam RM1 dan buku RM5. Berapa baki wangnya?",
+                options: ["RM2", "RM3", "RM4", "RM1"],
+                answer: 0
+            },
+            {
+                question: "Di dalam kelas terdapat 6 barisan meja. Setiap barisan ada 3 meja. Berapa jumlah meja semuanya?",
+                options: ["9", "18", "12", "21"],
+                answer: 1
+            },
+            {
+                question: "Ayah membeli 3 kotak susu. Setiap kotak ada 6 kotak kecil. Berapa kotak kecil semuanya?",
+                options: ["9", "18", "12", "15"],
+                answer: 1
+            },
+            {
+                question: "Mira ada 8 pensel. Dia berikan 2 kepada Ali dan 3 kepada Siti. Berapa pensel yang tinggal?",
+                options: ["2", "3", "4", "5"],
+                answer: 1
+            },
+            {
+                question: "Jika kamu bangun pada pukul 7 pagi dan tiba di sekolah pada pukul 8 pagi, berapa lama masa perjalanan kamu?",
+                options: ["1 jam", "2 jam", "30 minit", "45 minit"],
+                answer: 0
+            },
+            {
+                question: "Ibu memasak 12 ketul ayam dan membahagi sama rata kepada 4 orang anak. Berapa ketul setiap seorang dapat?",
+                options: ["2", "3", "4", "5"],
+                answer: 1
+            },
+            {
+                question: "Dalam satu bakul ada 3 biji epal, 2 biji oren dan 4 biji pisang. Berapa jumlah buah dalam bakul itu?",
+                options: ["8", "9", "10", "7"],
+                answer: 1
+            },
+            {
+                question: "Jika Rina membeli 3 batang coklat pada RM2 setiap satu, berapa jumlah harga coklat tersebut?",
+                options: ["RM5", "RM6", "RM7", "RM8"],
+                answer: 1
+            },
+            {
+                question: "Satu kotak mengandungi 10 batang krayon. Jika saya ada 3 kotak, berapa batang krayon semuanya?",
+                options: ["30", "20", "25", "35"],
+                answer: 0
+            }
+
+        ];
+
+        // DOM elements
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const certificateContainer = document.getElementById('certificate-container');
+        const startQuizButton = document.getElementById('start-quiz');
+        const nextButton = document.getElementById('next-button');
+        const tryAgainButton = document.getElementById('try-again');
+        const viewCertificateButton = document.getElementById('view-certificate');
+        const backToSummaryButton = document.getElementById('back-to-summary');
+        const downloadCertificateButton = document.getElementById('download-certificate');
+        const studentNameInput = document.getElementById('student-name');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const scoreText = document.getElementById('score-text');
+        const questionText = document.getElementById('question-text');
+        const questionImage = document.getElementById('question-image');
+        const optionsContainer = document.getElementById('options-container');
+        const feedback = document.getElementById('feedback');
+        const finalScore = document.getElementById('final-score');
+        const resultMessage = document.getElementById('result-message');
+        const certificateName = document.getElementById('certificate-name');
+        const certificateDate = document.getElementById('certificate-date');
+
+        // Quiz state
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let studentName = '';
+
+        // Start the quiz
+        startQuizButton.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim() || 'Pelajar';
+            welcomeScreen.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            initializeQuiz();
+        });
+
+        // Initialize the quiz
+        function initializeQuiz() {
+            // Reset quiz state
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+
+            // Select 30 random questions
+            currentQuestions = getRandomQuestions(allQuestions, 30);
+
+            // Display the first question
+            displayQuestion();
+
+            // Update score and progress
+            updateScore();
+            updateProgress();
+        }
+
+        // Get random questions
+        function getRandomQuestions(questions, count) {
+            const shuffled = [...questions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Display current question
+        function displayQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+
+            // Set question text
+            questionText.textContent = question.question;
+
+            // Set question image if available
+            if (question.image) {
+                questionImage.innerHTML = question.image;
+                questionImage.classList.remove('hidden');
+            } else {
+                questionImage.classList.add('hidden');
+            }
+
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+
+            // Create option buttons
+            question.options.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option w-full bg-white border-2 border-blue-300 text-gray-800 font-medium py-3 px-6 rounded-lg hover:bg-blue-50 text-left';
+                optionButton.textContent = option;
+                optionButton.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionButton);
+            });
+
+            // Hide feedback and next button
+            feedback.classList.add('hidden');
+            nextButton.classList.add('hidden');
+
+            // Reset answered state
+            answered = false;
+        }
+
+        // Select an option
+        function selectOption(selectedIndex) {
+            if (answered) return;
+
+            answered = true;
+            const question = currentQuestions[currentQuestionIndex];
+            const options = optionsContainer.querySelectorAll('.option');
+
+            // Disable all options
+            options.forEach(option => option.classList.add('disabled'));
+
+            // Check if answer is correct
+            if (selectedIndex === question.answer) {
+                options[selectedIndex].classList.add('correct');
+                feedback.textContent = 'Jawapan betul! 🎉';
+                feedback.className = 'p-3 rounded-lg mb-4 text-center bg-green-100 text-green-800';
+                score++;
+                updateScore();
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[question.answer].classList.add('correct');
+                feedback.textContent = 'Jawapan salah. Cuba lagi! 💪';
+                feedback.className = 'p-3 rounded-lg mb-4 text-center bg-red-100 text-red-800';
+            }
+
+            feedback.classList.remove('hidden');
+            nextButton.classList.remove('hidden');
+
+            // Enable next button
+            nextButton.disabled = false;
+        }
+
+        // Go to next question
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < currentQuestions.length) {
+                displayQuestion();
+                updateProgress();
+            } else {
+                showResults();
+            }
+        });
+
+        // Update progress indicator
+        function updateProgress() {
+            const current = currentQuestionIndex + 1;
+            const total = currentQuestions.length;
+            progressText.textContent = `Soalan ${current} / ${total}`;
+            progressBar.style.width = `${(current / total) * 100}%`;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreText.textContent = `Markah: ${score} / ${currentQuestions.length}`;
+        }
+
+        // Show results
+        function showResults() {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+
+            finalScore.textContent = `Anda mendapat markah: ${score} / ${currentQuestions.length}`;
+
+            // Set result message based on score
+            const percentage = (score / currentQuestions.length) * 100;
+
+            if (percentage === 100) {
+                resultMessage.textContent = `Tahniah ${studentName}! Anda telah menjawab semua soalan dengan betul!`;
+                viewCertificateButton.classList.remove('hidden');
+
+                // Trigger confetti for perfect score
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            } else if (percentage >= 80) {
+                resultMessage.textContent = 'Bagus! Anda telah melakukan dengan sangat baik!';
+            } else if (percentage >= 60) {
+                resultMessage.textContent = 'Baik! Teruskan usaha anda!';
+            } else {
+                resultMessage.textContent = 'Jangan putus asa! Cuba lagi untuk meningkatkan markah anda!';
+            }
+        }
+
+        // Try again
+        tryAgainButton.addEventListener('click', () => {
+            resultsContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            initializeQuiz();
+        });
+
+        // View certificate
+        viewCertificateButton.addEventListener('click', () => {
+            resultsContainer.classList.add('hidden');
+            certificateContainer.classList.remove('hidden');
+
+            // Set certificate details
+            certificateName.textContent = studentName;
+
+            // Set current date
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            certificateDate.textContent = `Tarikh: ${today.toLocaleDateString('ms-MY', options)}`;
+        });
+
+        // Back to summary
+        backToSummaryButton.addEventListener('click', () => {
+            certificateContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+        });
+
+        // Download certificate
+        downloadCertificateButton.addEventListener('click', () => {
+            const certificateElement = document.getElementById("certificate");
+            html2canvas(certificateElement, { scale: 2 }).then((canvas) => {
+                const link = document.createElement("a");
+                link.download = "certificate.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+            // alert("Sijil anda sedang dimuat turun!");
+            // In a real implementation, this would use html2canvas or similar library
+            // to convert the certificate to an image and download it
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'95637a5604aad42e',t:'MTc1MTAxMTkzMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+
+</html>

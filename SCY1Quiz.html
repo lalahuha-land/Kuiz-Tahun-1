@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuiz Sains Tahun 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f0f9ff;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2393c5fd' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .quiz-container {
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2393c5fd' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .option {
+            transition: all 0.2s ease;
+            border: 3px solid #e5e7eb;
+        }
+
+        .option:hover {
+            border-color: #93c5fd;
+            transform: scale(1.02);
+        }
+
+        .option.selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+
+        .option.correct {
+            border-color: #10b981;
+            background-color: #d1fae5;
+        }
+
+        .option.incorrect {
+            border-color: #ef4444;
+            background-color: #fee2e2;
+        }
+
+        .progress-bar {
+            height: 12px;
+            border-radius: 6px;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #3b82f6;
+            transition: width 0.5s ease;
+        }
+
+        .certificate {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23fbbf24' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            border: 10px solid #fbbf24;
+            position: relative;
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid #f59e0b;
+            z-index: -1;
+        }
+
+        .certificate-seal {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .animal-icon {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div id="main-container" class="w-full max-w-3xl">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="quiz-container p-8 text-center">
+            <div class="flex justify-center mb-6">
+                <svg class="animal-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="#FEF3C7" />
+                    <circle cx="35" cy="40" r="5" fill="#1F2937" />
+                    <circle cx="65" cy="40" r="5" fill="#1F2937" />
+                    <path d="M40 60 Q50 70 60 60" stroke="#1F2937" stroke-width="3" fill="none" />
+                    <path d="M20 30 Q25 10 40 20" stroke="#F59E0B" stroke-width="3" fill="none" />
+                    <path d="M80 30 Q75 10 60 20" stroke="#F59E0B" stroke-width="3" fill="none" />
+                </svg>
+            </div>
+            <h1 class="text-4xl font-bold text-blue-600 mb-4">Kuiz Sains Tahun 1</h1>
+            <p class="text-lg mb-8">Selamat datang ke kuiz sains yang menyeronokkan! Mari kita uji pengetahuan sains
+                kamu!</p>
+            <div class="mb-6">
+                <label for="student-name" class="block text-lg font-medium text-gray-700 mb-2">Nama Kamu:</label>
+                <input type="text" id="student-name"
+                    class="w-full p-3 border-2 border-blue-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Masukkan nama kamu di sini">
+            </div>
+            <button id="start-btn"
+                class="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg">Mula
+                Kuiz</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="quiz-container p-8 hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-blue-600">Kuiz Sains Tahun 1</h2>
+                <div class="text-lg font-medium text-gray-700" id="question-counter">Soalan 1 /30</div>
+            </div>
+
+            <div class="mb-4">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-bar" style="width: 20%"></div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h3 id="question-text" class="text-xl font-medium text-gray-800 mb-6"></h3>
+                <div id="options-container" class="space-y-4"></div>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <div class="text-lg font-medium text-gray-700">Markah: <span id="score-display">0</span></div>
+                <button id="next-btn"
+                    class="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">Seterusnya</button>
+            </div>
+        </div>
+
+        <!-- Summary Screen -->
+        <div id="summary-screen" class="quiz-container p-8 text-center hidden">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Tahniah!</h2>
+            <p class="text-xl mb-2">Kamu telah selesai kuiz sains!</p>
+            <div class="flex justify-center my-6">
+                <svg class="animal-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="#FEF3C7" />
+                    <circle cx="35" cy="40" r="5" fill="#1F2937" />
+                    <circle cx="65" cy="40" r="5" fill="#1F2937" />
+                    <path d="M35 60 Q50 70 65 60" stroke="#1F2937" stroke-width="3" fill="none" />
+                    <path d="M20 30 Q25 10 40 20" stroke="#F59E0B" stroke-width="3" fill="none" />
+                    <path d="M80 30 Q75 10 60 20" stroke="#F59E0B" stroke-width="3" fill="none" />
+                </svg>
+            </div>
+            <div class="bg-blue-100 rounded-lg p-6 mb-6">
+                <p class="text-2xl font-bold text-blue-800 mb-2">Markah Akhir: <span id="final-score">0</span> / 30</p>
+                <p id="result-message" class="text-lg text-blue-700"></p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button id="try-again-btn"
+                    class="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg">Cuba
+                    Lagi</button>
+                <button id="view-certificate-btn"
+                    class="btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg hidden">Lihat
+                    Sijil</button>
+                <a href="./index.html"
+                    class="btn bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-xl text-lg mt-4 inline-block">
+                    ⬅️ Kembali ke Laman Utama
+                </a>
+            </div>
+        </div>
+
+        <!-- Certificate Screen -->
+        <div id="certificate-screen" class="hidden">
+            <div id="certificate" class="certificate bg-white p-8 rounded-lg shadow-xl">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold text-yellow-600 mb-2">Sijil Pencapaian</h2>
+                    <div class="w-32 h-1 bg-yellow-500 mx-auto"></div>
+                </div>
+
+                <div class="text-center mb-8">
+                    <p class="text-lg text-gray-700">Sijil ini diberikan kepada</p>
+                    <h3 id="certificate-name" class="text-2xl font-bold text-blue-800 my-2"></h3>
+                    <p class="text-lg text-gray-700">kerana berjaya mendapat markah penuh dalam</p>
+                    <h4 class="text-xl font-bold text-blue-600 my-2">Kuiz Sains Tahun 1</h4>
+                </div>
+
+                <div class="flex justify-center mb-6">
+                    <svg class="w-32 h-32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#FEF3C7" />
+                        <circle cx="35" cy="40" r="5" fill="#1F2937" />
+                        <circle cx="65" cy="40" r="5" fill="#1F2937" />
+                        <path d="M35 60 Q50 75 65 60" stroke="#1F2937" stroke-width="3" fill="none" />
+                        <path d="M20 30 Q25 10 40 20" stroke="#F59E0B" stroke-width="3" fill="none" />
+                        <path d="M80 30 Q75 10 60 20" stroke="#F59E0B" stroke-width="3" fill="none" />
+                        <circle cx="50" cy="50" r="48" stroke="#F59E0B" stroke-width="2" fill="none" />
+                        <circle cx="50" cy="50" r="42" stroke="#F59E0B" stroke-width="1" fill="none"
+                            stroke-dasharray="2,2" />
+                    </svg>
+                </div>
+
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p id="certificate-date" class="text-gray-600"></p>
+                        <div class="w-40 h-0.5 bg-gray-400 mt-1"></div>
+                        <p class="text-gray-600">Tarikh</p>
+                    </div>
+                    <div>
+                        <div class="w-40 h-0.5 bg-gray-400 mt-1"></div>
+                        <p class="text-gray-600">Guru</p>
+                    </div>
+                </div>
+
+                <svg class="certificate-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3" />
+                    <circle cx="50" cy="50" r="38" fill="none" stroke="#F59E0B" stroke-width="1"
+                        stroke-dasharray="3,3" />
+                    <path d="M50 20 L53 32 L65 32 L55 40 L59 52 L50 45 L41 52 L45 40 L35 32 L47 32 Z" fill="#F59E0B" />
+                </svg>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-6">
+                <button id="back-to-summary-btn"
+                    class="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg">Kembali
+                    ke Ringkasan</button>
+                <button id="download-certificate-btn"
+                    class="btn bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg">Muat
+                    Turun Sijil</button>
+                <button id="certificate-try-again-btn"
+                    class="btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg">Cuba
+                    Lagi</button>
+                <a href="./index.html"
+                    class="btn bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-xl text-lg mt-4 inline-block">
+                    ⬅️ Kembali ke Laman Utama
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // All quiz questions
+        const allQuestions = [
+            {
+                question: "Apakah deria yang kita gunakan untuk melihat?",
+                options: ["Mata", "Telinga", "Hidung", "Lidah"],
+                correctAnswer: 0
+            },
+            {
+                question: "Manakah antara berikut adalah haiwan yang boleh terbang?",
+                options: ["Ikan", "Burung", "Katak", "Siput"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang tumbuhan perlukan untuk hidup?",
+                options: ["Coklat", "Air dan cahaya matahari", "Televisyen", "Kereta"],
+                correctAnswer: 1
+            },
+            {
+                question: "Manakah antara berikut adalah sumber makanan?",
+                options: ["Batu", "Kertas", "Buah-buahan", "Plastik"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang kita perlukan untuk bernafas?",
+                options: ["Udara", "Batu", "Pasir", "Kertas"],
+                correctAnswer: 0
+            },
+            {
+                question: "Manakah antara berikut adalah objek yang boleh ditarik oleh magnet?",
+                options: ["Kertas", "Plastik", "Klip kertas besi", "Getah"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang berlaku kepada ais apabila ia dipanaskan?",
+                options: ["Ia menjadi lebih sejuk", "Ia menjadi lebih keras", "Ia mencair", "Ia bertukar menjadi batu"],
+                correctAnswer: 2
+            },
+            {
+                question: "Manakah antara berikut adalah haiwan yang hidup di dalam air?",
+                options: ["Arnab", "Ikan", "Burung", "Kucing"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang kita gunakan untuk mendengar bunyi?",
+                options: ["Mata", "Hidung", "Telinga", "Tangan"],
+                correctAnswer: 2
+            },
+            {
+                question: "Manakah antara berikut adalah contoh benda hidup?",
+                options: ["Batu", "Pokok", "Kereta", "Televisyen"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang kita gunakan untuk merasai makanan?",
+                options: ["Mata", "Telinga", "Hidung", "Lidah"],
+                correctAnswer: 3
+            },
+            {
+                question: "Manakah antara berikut adalah sumber tenaga yang boleh diperbaharui?",
+                options: ["Minyak", "Gas", "Tenaga solar", "Arang batu"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang kita gunakan untuk mengukur suhu?",
+                options: ["Penggaris", "Termometer", "Jam", "Kamera"],
+                correctAnswer: 1
+            },
+            {
+                question: "Manakah antara berikut adalah contoh benda tidak hidup?",
+                options: ["Pokok", "Haiwan", "Batu", "Manusia"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang kita gunakan untuk menulis?",
+                options: ["Pensel", "Kertas", "Buku", "Semua di atas"],
+                correctAnswer: 3
+            },
+            {
+                question: "Manakah antara berikut adalah contoh haiwan mamalia?",
+                options: ["Ikan", "Burung", "Kucing", "Cacing"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang kita gunakan untuk melindungi diri daripada hujan?",
+                options: ["Payung", "Topi", "Kasut", "Baju"],
+                correctAnswer: 0
+            },
+            {
+                question: "Manakah antara berikut adalah contoh benda yang boleh terbang?",
+                options: ["Pesawat", "Kereta", "Bas", "Beca"],
+                correctAnswer: 0
+            },
+            {
+                question: "Apakah yang kita gunakan untuk melihat waktu?",
+                options: ["Jam", "Kamera", "Televisyen", "Telefon"],
+                correctAnswer: 0
+            },
+            {
+                question: "Manakah antara berikut adalah contoh haiwan reptilia?",
+                options: ["Ikan", "Burung", "Ular", "Kucing"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang kita gunakan untuk mengukur panjang?",
+                options: ["Penggaris", "Termometer", "Jam", "Kamera"],
+                correctAnswer: 0
+            },
+            {
+                question: "Manakah antara berikut adalah contoh benda yang boleh dibakar?",
+                options: ["Batu", "Kertas", "Air", "Logam"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang kita gunakan untuk mengukur berat?",
+                options: ["Penggaris", "Termometer", "Timbangan", "Kamera"],
+                correctAnswer: 2
+            },
+            {
+                question: "Manakah antara berikut adalah contoh haiwan serangga?",
+                options: ["Ikan", "Burung", "Kupu-kupu", "Kucing"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang kita gunakan untuk mengukur masa?",
+                options: ["Penggaris", "Termometer", "Jam", "Kamera"],
+                correctAnswer: 2
+            },
+            {
+                question: "Manakah antara berikut adalah contoh benda yang boleh mengalir?",
+                options: ["Batu", "Air", "Kertas", "Logam"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang kita gunakan untuk mengukur suhu badan?",
+                options: ["Penggaris", "Termometer", "Jam", "Kamera"],
+                correctAnswer: 1
+            },
+            {
+                question: "Manakah antara berikut adalah contoh haiwan yang hidup di darat?",
+                options: ["Ikan", "Burung", "Kucing", "Siput"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang kita gunakan untuk mengukur kelajuan?",
+                options: ["Penggaris", "Termometer", "Jam tangan", "Kamera"],
+                correctAnswer: 2
+            },
+            {
+                question: "Air berubah menjadi ais apabila?",
+                options: [
+                    "Dipanas",
+                    "Dibekukan",
+                    "Digoncang",
+                    "Ditiup"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Air bertukar menjadi wap apabila?",
+                options: [
+                    "Dibekukan",
+                    "Dididihkan",
+                    "Didinginkan",
+                    "Dibungkus"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Bumi berbentuk?",
+                options: [
+                    "Segi empat",
+                    "Bulat",
+                    "Segitiga",
+                    "Silinder"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Kegunaan matahari ialah untuk?",
+                options: [
+                    "Menyinarkan cahaya",
+                    "Menyiram pokok",
+                    "Menghasilkan elektrik",
+                    "Menyerap air"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Tumbuhan bergerak ke arah?",
+                options: [
+                    "Air",
+                    "Cahaya",
+                    "Bunyi",
+                    "Angin"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Haiwan memerlukan ____ untuk hidup.",
+                options: [
+                    "Makanan",
+                    "Permainan",
+                    "Pakaian",
+                    "Telefon"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Contoh sumber semula jadi ialah?",
+                options: [
+                    "Air",
+                    "Kereta",
+                    "Telefon",
+                    "Kipas"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Benda yang boleh terapung dalam air?",
+                options: [
+                    "Batu",
+                    "Kayu",
+                    "Syiling",
+                    "Kaca"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Contoh bahan telus cahaya ialah?",
+                options: [
+                    "Kertas",
+                    "Plastik jernih",
+                    "Kayu",
+                    "Logam"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Angin membantu dalam?",
+                options: [
+                    "Penerbangan layang-layang",
+                    "Membaca buku",
+                    "Menulis surat",
+                    "Melukis gambar"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Apakah bahan yang digunakan untuk membuat baju?",
+                options: [
+                    "Kaca",
+                    "Kayu",
+                    "Kain",
+                    "Logam"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah sumber cahaya pada waktu malam?",
+                options: [
+                    "Matahari",
+                    "Bulan",
+                    "Awan",
+                    "Rumput"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Tumbuhan memerlukan apa untuk membuat makanan?",
+                options: [
+                    "Cahaya matahari",
+                    "Batu",
+                    "Udara kotor",
+                    "Air laut"
+                ],
+                correctAnswer: 0
+            }, {
+                question: "Alat untuk melihat benda jauh ialah?",
+                options: [
+                    "Mikroskop",
+                    "Kanta",
+                    "Teropong",
+                    "Kamera"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Matahari terbit dari arah?",
+                options: [
+                    "Utara",
+                    "Selatan",
+                    "Timur",
+                    "Barat"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Contoh perubahan keadaan air ialah?",
+                options: [
+                    "Ais menjadi air",
+                    "Air menjadi kayu",
+                    "Wap menjadi tanah",
+                    "Tanah menjadi batu"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Awan terbentuk daripada?",
+                options: [
+                    "Udara",
+                    "Haba",
+                    "Wap air",
+                    "Batu"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Jika kamu melihat api, apakah yang patut kamu lakukan?",
+                options: ["Main dengan api", "Lari jauh dan minta bantuan", "Cuba pegang api", "Biarkan sahaja"],
+                correctAnswer: 1
+            },
+            {
+                question: "Mengapa tumbuhan perlu cahaya matahari?",
+                options: ["Untuk tidur", "Untuk berbunga", "Untuk buat makanan", "Untuk bersinar"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apa yang berlaku jika kita tidak menyiram pokok?",
+                options: ["Pokok membesar", "Pokok menjadi sihat", "Pokok mati", "Pokok berbuah"],
+                correctAnswer: 2
+            },
+            {
+                question: "Mengapa kita perlu menjaga kebersihan air?",
+                options: ["Supaya air kotor", "Untuk minum air bersih", "Supaya tidak boleh digunakan", "Untuk mencemarkan sungai"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah akan berlaku jika semua tumbuhan ditebang?",
+                options: ["Udara bersih", "Banyak oksigen", "Kehabisan makanan dan oksigen", "Hutan bertambah"],
+                correctAnswer: 2
+            },
+            {
+                question: "Mengapa kita tidak boleh buang sampah di sungai?",
+                options: ["Sebab ia menyeronokkan", "Kerana air akan jadi jernih", "Supaya ikan boleh hidup", "Untuk penuhkan sungai"],
+                correctAnswer: 2
+            },
+            {
+                question: "Jika kamu melihat haiwan cedera, apa yang patut kamu buat?",
+                options: ["Lari", "Balik rumah", "Menolong dan beritahu orang dewasa", "Biarkan sahaja"],
+                correctAnswer: 2
+            },
+            {
+                question: "Mengapa kita perlu menghargai air?",
+                options: ["Kerana ia mahal", "Kerana ia boleh diminum", "Kerana kita perlukan air untuk hidup", "Kerana ia berwarna biru"],
+                correctAnswer: 2
+            },
+            {
+                question: "Bagaimana cara menjaga haiwan peliharaan?",
+                options: ["Tidak beri makan", "Berikan makanan dan tempat tinggal", "Biarkan di luar", "Tidak pedulikan"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah kesan jika kita tidak menjaga alam sekitar?",
+                options: ["Udara segar", "Sungai bersih", "Pencemaran berlaku", "Hutan tumbuh luas"],
+                correctAnswer: 2
+            },
+            {
+                question: "Jika kita letak ais di bawah matahari, apa yang akan berlaku?",
+                options: ["Ais akan membeku", "Ais akan cair", "Ais menjadi lebih besar", "Ais berubah warna"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang berlaku jika belon diisi dengan udara dan dilepaskan?",
+                options: ["Belon terbang", "Belon pecah", "Belon mengecil", "Belon jatuh"],
+                correctAnswer: 0
+            },
+            {
+                question: "Apabila pokok tidak disiram, ia akan?",
+                options: ["Membesar", "Berbuah", "Layur", "Segar"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apabila kaca diketuk dengan sudu, bunyi dihasilkan. Ini menunjukkan kaca boleh?",
+                options: ["Mengalir", "Berbau", "Berbunyi", "Berwarna"],
+                correctAnswer: 2
+            },
+            {
+                question: "Jika kita campurkan air dan gula, apa yang berlaku?",
+                options: ["Air bertukar warna", "Gula larut", "Air menjadi beku", "Gula bertukar warna"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang berlaku kepada air apabila dipanaskan?",
+                options: ["Air menjadi sejuk", "Air bertukar menjadi wap", "Air menjadi warna lain", "Air membeku"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apabila kertas dibakar, ia akan?",
+                options: ["Melecur", "Menjadi ais", "Larut dalam air", "Bertukar menjadi api dan abu"],
+                correctAnswer: 3
+            },
+            {
+                question: "Apabila botol air dimasukkan ke dalam peti sejuk, air akan?",
+                options: ["Mendidih", "Menjadi wap", "Cair", "Membeku"],
+                correctAnswer: 3
+            },
+            {
+                question: "Apabila kamu tutup mata dan pegang bola, kamu masih boleh tahu itu bola dengan menggunakan?",
+                options: ["Mata", "Telinga", "Kulit", "Hidung"],
+                correctAnswer: 2
+            },
+            {
+                question: "Mengapa kita perlu memakai sarung tangan semasa sentuh ais?",
+                options: ["Supaya tangan tidak sejuk", "Untuk lihat ais", "Untuk bau ais", "Supaya ais cepat cair"],
+                correctAnswer: 0
+            },
+            {
+                question: "Apakah keperluan asas manusia?",
+                options: [
+                    "Air, makanan dan udara",
+                    "Gula, mainan dan telefon",
+                    "Wang, kereta dan kipas",
+                    "Permainan dan lampu"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Apakah yang menghasilkan bunyi kuat?",
+                options: [
+                    "Jam loceng",
+                    "Kipas",
+                    "Pensel",
+                    "Kaca"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Air boleh didapati dari?",
+                options: [
+                    "Pasir",
+                    "Sungai",
+                    "Udara",
+                    "Awan"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang boleh bergerak sendiri?",
+                options: [
+                    "Basikal",
+                    "Kereta",
+                    "Burung",
+                    "Gitar"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah alat yang digunakan untuk mengukur berat?",
+                options: [
+                    "Jam",
+                    "Penimbang",
+                    "Pembaris",
+                    "Pensel"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Bahan yang boleh larut dalam air ialah?",
+                options: [
+                    "Garam",
+                    "Pasir",
+                    "Besi",
+                    "Kaca"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Apakah kegunaan hidung?",
+                options: [
+                    "Melihat",
+                    "Bernafas dan menghidu",
+                    "Berjalan",
+                    "Mendengar"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Air bertukar menjadi ais apabila?",
+                options: [
+                    "Dipanaskan",
+                    "Dibekukan",
+                    "Disimpan",
+                    "Digerakkan"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Haiwan tinggal di mana?",
+                options: [
+                    "Rumah",
+                    "Sarang",
+                    "Kedai",
+                    "Kelas"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Air boleh mengalir ke?",
+                options: [
+                    "Atas",
+                    "Bawah",
+                    "Sisi",
+                    "Dalam bulatan"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Tumbuhan memerlukan ____ untuk hidup.",
+                options: [
+                    "Minyak",
+                    "Garam",
+                    "Air dan cahaya",
+                    "Pasir dan batu"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Contoh bahan yang tidak telus cahaya ialah?",
+                options: [
+                    "Kaca jernih",
+                    "Kertas",
+                    "Plastik gelap",
+                    "Besi"
+                ],
+                correctAnswer: 3
+            },
+            {
+                question: "Benda hidup akan?",
+                options: [
+                    "Tumbuh dan membiak",
+                    "Diam dan statik",
+                    "Pudar dan hilang",
+                    "Menjadi besi"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Udara diperlukan untuk?",
+                options: [
+                    "Tidur",
+                    "Bernafas",
+                    "Menulis",
+                    "Bermain"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang berlaku apabila lampu dipadam?",
+                options: [
+                    "Lebih terang",
+                    "Cahaya hilang",
+                    "Matahari muncul",
+                    "Dingin"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah warna daun yang sihat?",
+                options: [
+                    "Kuning",
+                    "Hijau",
+                    "Merah",
+                    "Coklat"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah nama organ yang membantu kita mendengar?",
+                options: [
+                    "Lidah",
+                    "Telinga",
+                    "Mata",
+                    "Kulit"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Kita perlu minum air kerana?",
+                options: [
+                    "Ia sedap",
+                    "Ia sejuk",
+                    "Untuk kekal sihat",
+                    "Ia murah"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Mengapa kita perlu makan makanan yang sihat?",
+                options: ["Untuk kuat dan sihat", "Supaya tidur lebih lama", "Agar cepat letih", "Untuk tidak ke sekolah"],
+                correctAnswer: 0
+            },
+            {
+                question: "Apa yang akan berlaku jika kita tidak minum air?",
+                options: ["Kita rasa segar", "Kita rasa lapar", "Kita rasa dahaga dan letih", "Kita semakin kuat"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah warna biasa daun yang sihat?",
+                options: ["Merah", "Hijau", "Biru", "Coklat"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apa yang perlu dilakukan jika melihat tumpahan air di lantai?",
+                options: ["Biarkan sahaja", "Berlari melaluinya", "Lap dengan kain", "Main air itu"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah contoh tingkah laku menjaga kebersihan diri?",
+                options: ["Tidak mandi", "Mencuci tangan", "Bermain lumpur", "Makan tanpa basuh tangan"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah yang berlaku jika kita simpan makanan terlalu lama di luar peti sejuk?",
+                options: ["Jadi lebih sedap", "Kekal segar", "Boleh rosak atau basi", "Jadi keras"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang perlu kita lakukan selepas bersin?",
+                options: ["Bersorak", "Lap muka pada baju", "Cuci tangan", "Berteriak"],
+                correctAnswer: 2
+            },
+            {
+                question: "Kenapa perlu memakai topi semasa cuaca panas?",
+                options: ["Untuk bergaya", "Melindungi kepala daripada panas", "Untuk bermain air", "Supaya kelihatan tinggi"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apa berlaku kepada baju yang dijemur di bawah matahari?",
+                options: ["Menjadi basah", "Bertukar warna", "Menjadi kering", "Berbau busuk"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah organ yang digunakan untuk merasa pedas?",
+                options: ["Hidung", "Lidah", "Telinga", "Mata"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah keadaan cuaca apabila langit mendung dan hujan turun?",
+                options: ["Cerah", "Berangin", "Hujan", "Panas"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah bahan yang digunakan untuk membuat tingkap rumah supaya cahaya boleh masuk?",
+                options: ["Kertas", "Kaca", "Kayu", "Besi"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah bunyi yang boleh kita dengar di taman permainan?",
+                options: ["Suara kanak-kanak", "Bunyi ombak", "Bunyi motosikal", "Bunyi kilat"],
+                correctAnswer: 0
+            },
+            {
+                question: "Antara berikut, yang manakah bersifat lembut?",
+                options: ["Bantal", "Batu", "Meja", "Kerusi"],
+                correctAnswer: 0
+            },
+            {
+                question: "Apakah yang digunakan untuk mengeringkan pakaian?",
+                options: ["Air", "Api", "Matahari", "Ais"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apa yang berlaku apabila kita tutup lampu di bilik?",
+                options: ["Lebih cerah", "Cahaya hilang", "Bunyi muncul", "Tirai terbuka"],
+                correctAnswer: 1
+            },
+            {
+                question: "Apakah contoh benda yang terapung di dalam air?",
+                options: ["Besi", "Batu", "Kayu", "Syiling"],
+                correctAnswer: 2
+            },
+            {
+                question: "Apakah yang boleh menyebabkan api marak dan berbahaya?",
+                options: ["Air", "Kain basah", "Angin kuat", "Ais"],
+                correctAnswer: 2
+            },
+            {
+                question: "Mengapa kita perlu tutup paip selepas digunakan?",
+                options: ["Supaya air tidak bocor", "Untuk bermain air", "Agar paip tidak hilang", "Untuk membasuh tangan"],
+                correctAnswer: 0
+            },
+            {
+                question: "Apakah punca utama cahaya di siang hari?",
+                options: ["Mentol", "Matahari", "Lilin", "Telefon"],
+                correctAnswer: 1
+            }
+        ];
+
+        // DOM elements
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const summaryScreen = document.getElementById('summary-screen');
+        const certificateScreen = document.getElementById('certificate-screen');
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const tryAgainBtn = document.getElementById('try-again-btn');
+        const viewCertificateBtn = document.getElementById('view-certificate-btn');
+        const backToSummaryBtn = document.getElementById('back-to-summary-btn');
+        const downloadCertificateBtn = document.getElementById('download-certificate-btn');
+        const certificateTryAgainBtn = document.getElementById('certificate-try-again-btn');
+        const studentNameInput = document.getElementById('student-name');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const finalScore = document.getElementById('final-score');
+        const resultMessage = document.getElementById('result-message');
+        const certificateName = document.getElementById('certificate-name');
+        const certificateDate = document.getElementById('certificate-date');
+
+        // Quiz state
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+        let answerLocked = false;
+
+        // Initialize the quiz
+        function initQuiz() {
+            // Reset state
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedOption = null;
+            answerLocked = false;
+
+            // Select 30 random questions
+            currentQuestions = getRandomQuestions(allQuestions, 30);
+
+            // Update UI
+            updateQuestionCounter();
+            updateProgressBar();
+            displayQuestion();
+            scoreDisplay.textContent = score;
+
+            // Show quiz screen
+            welcomeScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            summaryScreen.classList.add('hidden');
+            certificateScreen.classList.add('hidden');
+        }
+
+        // Get random questions without duplicates
+        function getRandomQuestions(questions, count) {
+            const shuffled = [...questions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Display current question
+        function displayQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+
+            // Clear options container
+            optionsContainer.innerHTML = '';
+
+            // Create option elements
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option p-4 rounded-lg cursor-pointer flex items-center';
+                optionElement.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                        <span class="font-bold text-blue-600">${String.fromCharCode(65 + index)}</span>
+                    </div>
+                    <span class="text-lg">${option}</span>
+                `;
+
+                optionElement.addEventListener('click', () => selectOption(optionElement, index));
+                optionsContainer.appendChild(optionElement);
+            });
+
+            // Reset state for new question
+            selectedOption = null;
+            answerLocked = false;
+            nextBtn.disabled = true;
+        }
+
+        // Select an option
+        function selectOption(optionElement, index) {
+            if (answerLocked) return;
+
+            // Clear previous selection
+            const options = optionsContainer.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+
+            // Set new selection
+            optionElement.classList.add('selected');
+            selectedOption = index;
+            nextBtn.disabled = false;
+        }
+
+        // Check answer and proceed
+        function checkAnswer() {
+            if (selectedOption === null) return;
+
+            answerLocked = true;
+            const correctAnswerIndex = currentQuestions[currentQuestionIndex].correctAnswer;
+            const options = optionsContainer.querySelectorAll('.option');
+
+            // Mark correct and incorrect answers
+            options.forEach((opt, index) => {
+                if (index === correctAnswerIndex) {
+                    opt.classList.add('correct');
+                } else if (index === selectedOption) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            // Update score if correct
+            if (selectedOption === correctAnswerIndex) {
+                score++;
+                scoreDisplay.textContent = score;
+            }
+
+            // Enable next button
+            nextBtn.disabled = false;
+        }
+
+        // Move to next question or finish quiz
+        function nextQuestion() {
+            if (!answerLocked) {
+                checkAnswer();
+                return;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < currentQuestions.length) {
+                updateQuestionCounter();
+                updateProgressBar();
+                displayQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        // Update question counter
+        function updateQuestionCounter() {
+            questionCounter.textContent = `Soalan ${currentQuestionIndex + 1} / ${currentQuestions.length}`;
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Finish quiz and show summary
+        function finishQuiz() {
+            quizScreen.classList.add('hidden');
+            summaryScreen.classList.remove('hidden');
+
+            finalScore.textContent = score;
+
+            // Set result message based on score
+            if (score === currentQuestions.length) {
+                resultMessage.textContent = "Tahniah! Kamu mendapat markah penuh! Kamu seorang saintis muda yang hebat!";
+                viewCertificateBtn.classList.remove('hidden');
+
+                // Trigger confetti for perfect score
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            } else if (score >= currentQuestions.length * 0.8) {
+                resultMessage.textContent = "Bagus! Kamu telah menjawab kebanyakan soalan dengan betul!";
+                viewCertificateBtn.classList.add('hidden');
+            } else if (score >= currentQuestions.length * 0.6) {
+                resultMessage.textContent = "Baik! Teruskan belajar untuk menjadi lebih baik!";
+                viewCertificateBtn.classList.add('hidden');
+            } else {
+                resultMessage.textContent = "Jangan putus asa! Cuba lagi untuk mendapat markah yang lebih baik!";
+                viewCertificateBtn.classList.add('hidden');
+            }
+        }
+
+        // Show certificate
+        function showCertificate() {
+            summaryScreen.classList.add('hidden');
+            certificateScreen.classList.remove('hidden');
+
+            // Set certificate details
+            certificateName.textContent = studentNameInput.value || "Pelajar";
+
+            // Set current date
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            certificateDate.textContent = today.toLocaleDateString('ms-MY', options);
+
+            // Trigger confetti again
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Download certificate as image
+        function downloadCertificate() {
+            // This is a simplified version that alerts the user
+            // In a real implementation, you would use html2canvas or similar library
+            // alert("Sijil telah dimuat turun!");
+            const certificateElement = document.getElementById("certificate");
+            html2canvas(certificateElement, { scale: 2 }).then((canvas) => {
+                const link = document.createElement("a");
+                link.download = "certificate.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', () => {
+            if (!studentNameInput.value.trim()) {
+                alert("Sila masukkan nama kamu!");
+                return;
+            }
+            initQuiz();
+        });
+
+        nextBtn.addEventListener('click', nextQuestion);
+        tryAgainBtn.addEventListener('click', initQuiz);
+        viewCertificateBtn.addEventListener('click', showCertificate);
+        backToSummaryBtn.addEventListener('click', () => {
+            certificateScreen.classList.add('hidden');
+            summaryScreen.classList.remove('hidden');
+        });
+        downloadCertificateBtn.addEventListener('click', downloadCertificate);
+        certificateTryAgainBtn.addEventListener('click', initQuiz);
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9563849ce7786e6b',t:'MTc1MTAxMjM1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+
+</html>

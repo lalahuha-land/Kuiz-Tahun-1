@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuiz Bahasa Melayu Tahun 1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: 'Comic Neue', cursive;
+      background-color: #f0f9ff;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c7d2fe' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .btn {
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .option {
+      transition: all 0.2s ease;
+    }
+
+    .option:hover:not(.selected) {
+      transform: scale(1.02);
+    }
+
+    .option.selected {
+      border-width: 3px;
+    }
+
+    .option.correct {
+      background-color: #d1fae5;
+      border-color: #10b981;
+    }
+
+    .option.incorrect {
+      background-color: #fee2e2;
+      border-color: #ef4444;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .animate-bounce {
+      animation: bounce 1s infinite;
+    }
+
+    .certificate {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23d8b4fe' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+
+<body>
+  <div class="min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-auto">
+      <div class="text-center">
+        <h1 class="text-3xl font-bold text-purple-600 mb-4">Kuiz Bahasa Melayu Tahun 1</h1>
+        <div class="flex justify-center mb-6">
+          <div class="w-16 h-16 rounded-full bg-yellow-400 flex items-center justify-center animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+        </div>
+        <p class="text-gray-600 mb-6">Selamat datang ke kuiz Bahasa Melayu! Mari kita bermain dan belajar bersama!</p>
+        <div class="mb-6">
+          <label for="student-name" class="block text-sm font-medium text-gray-700 mb-1">Nama Penuh:</label>
+          <input type="text" id="student-name"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            placeholder="Masukkan nama anda">
+        </div>
+        <button id="start-btn"
+          class="btn bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full text-lg">
+          Mula Kuiz
+        </button>
+      </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div id="quiz-container" class="bg-white rounded-2xl shadow-xl p-6 max-w-md w-full mx-auto hidden">
+      <div class="flex justify-between items-center mb-6">
+        <div class="text-sm font-medium text-gray-500" id="progress-text">Soalan 1 / 5</div>
+        <div class="text-sm font-medium text-purple-600" id="score-text">Markah: 0</div>
+      </div>
+
+      <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+        <div id="progress-bar" class="bg-purple-600 h-2.5 rounded-full" style="width: 20%"></div>
+      </div>
+
+      <div id="question-container" class="mb-6">
+        <h2 id="question-text" class="text-xl font-bold text-gray-800 mb-4">Question goes here</h2>
+        <div id="question-image-container" class="mb-4 hidden">
+          <img id="question-image" class="mx-auto rounded-lg" src="" alt="">
+        </div>
+      </div>
+
+      <div id="options-container" class="space-y-3 mb-6">
+        <!-- Options will be inserted here -->
+      </div>
+
+      <div class="flex justify-between">
+        <button id="next-btn"
+          class="btn bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg opacity-50 cursor-not-allowed"
+          disabled>
+          Seterusnya
+        </button>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-auto hidden">
+      <div class="text-center">
+        <div id="results-emoji" class="text-6xl mb-4">🎉</div>
+        <h2 class="text-2xl font-bold text-purple-600 mb-2">Tahniah!</h2>
+        <p id="student-result" class="text-gray-700 mb-4">Nama, anda telah mendapat 5/5!</p>
+        <p id="result-message" class="text-gray-600 mb-6">Anda sangat hebat!</p>
+
+        <div class="space-y-4">
+          <button id="view-certificate-btn"
+            class="btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg w-full hidden">
+            Lihat Sijil
+          </button>
+          <button id="try-again-btn"
+            class="btn bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg w-full">
+            Cuba Lagi
+          </button>
+          <a href="./index.html"
+            class="btn bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-xl text-lg mt-4 inline-block">
+            ⬅️ Kembali ke Laman Utama
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Certificate Screen -->
+    <div id="certificate-screen" class="hidden">
+      <div id="certificate"
+        class="certificate bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full mx-auto border-8 border-double border-yellow-500">
+        <div class="text-center">
+          <div class="flex justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-yellow-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-purple-800 mb-2">Sijil Pencapaian</h2>
+          <p class="text-gray-600 mb-6">Ini untuk mengesahkan bahawa</p>
+          <p id="certificate-name" class="text-2xl font-bold text-purple-600 mb-6">Nama Pelajar</p>
+          <p class="text-gray-600 mb-2">telah berjaya menjawab semua soalan dengan betul dalam</p>
+          <p class="text-xl font-bold text-purple-800 mb-6">Kuiz Bahasa Melayu Tahun 1</p>
+          <p id="certificate-date" class="text-gray-600 mb-8">1 Januari 2023</p>
+
+          <div class="border-t-2 border-gray-200 pt-4 flex justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-yellow-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-center space-x-4">
+        <button id="download-certificate-btn"
+          class="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg">
+          Muat Turun Sijil
+        </button>
+        <button id="back-to-results-btn"
+          class="btn bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg">
+          Kembali
+        </button>
+        <a href="./index.html"
+          class="btn bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-xl text-lg mt-4 inline-block">
+          ⬅️ Kembali ke Laman Utama
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Quiz questions
+    const allQuestions = [
+      {
+        question: "Pilih perkataan yang bermula dengan huruf 'B':",
+        options: ["Ayam", "Bola", "Kucing", "Daun"],
+        correctAnswer: 1,
+        type: "text"
+      },
+
+      {
+        question: "Lengkapkan ayat: Saya _____ ke sekolah.",
+        options: ["makan", "tidur", "pergi", "main"],
+        correctAnswer: 2,
+        type: "text"
+      },
+
+      {
+        question: "Apakah warna buah ini?",
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23FF0000'/%3E%3Cpath d='M100 30 Q 120 10, 140 30' stroke='%23006400' stroke-width='6' fill='none'/%3E%3C/svg%3E",
+        options: ["Merah", "Biru", "Hijau", "Kuning"],
+        correctAnswer: 0,
+        type: "image"
+      },
+      {
+        question: "Pilih perkataan yang mempunyai 3 suku kata:",
+        options: ["Api", "Buku", "Sekolah", "Air"],
+        correctAnswer: 2,
+        type: "text"
+      },
+
+      {
+        question: "Apakah lawan perkataan 'Panas'?",
+        options: ["Sejuk", "Besar", "Tinggi", "Cepat"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Haiwan apakah ini?",
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cellipse cx='100' cy='130' rx='80' ry='40' fill='%23FFD700'/%3E%3Ccircle cx='100' cy='80' r='50' fill='%23FFD700'/%3E%3Ccircle cx='80' cy='70' r='10' fill='%23000'/%3E%3Ccircle cx='120' cy='70' r='10' fill='%23000'/%3E%3Cpath d='M90 90 Q 100 100, 110 90' stroke='%23000' stroke-width='3' fill='none'/%3E%3Cpath d='M60 40 Q 50 20, 40 40' stroke='%23FFD700' stroke-width='8' fill='%23FFD700'/%3E%3Cpath d='M140 40 Q 150 20, 160 40' stroke='%23FFD700' stroke-width='8' fill='%23FFD700'/%3E%3C/svg%3E",
+        options: ["Kucing", "Harimau", "Singa", "Arnab"],
+        correctAnswer: 2,
+        type: "image"
+      },
+      {
+        question: "Pilih perkataan yang bermaksud 'besar':",
+        options: ["Kecil", "Besar", "Panjang", "Pendek"],
+        correctAnswer: 1,
+        type: "text"
+      },
+      {
+        question: "Apakah warna langit pada waktu siang?",
+        options: ["Merah", "Biru", "Hijau", "Kuning"],
+        correctAnswer: 1,
+        type: "text"
+      },
+      {
+        question: "Pilih perkataan yang bermaksud 'cepat':",
+        options: ["Lambat", "Laju", "Sederhana", "Perlahan"],
+        correctAnswer: 1,
+        type: "text"
+      },
+      {
+        question: "Apakah haiwan ini?",
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23FF4500'/%3E%3Cpath d='M70 70 Q 90 50, 110 70' stroke='%23006400' stroke-width='6' fill='none'/%3E%3C/svg%3E",
+        options: ["Burung", "Ikan", "Kucing", "Anjing"],
+        correctAnswer: 0,
+        type: "image"
+      },
+      {
+        question: "Pilih perkataan yang bermaksud 'tinggi':",
+        options: ["Rendah", "Tinggi", "Pendek", "Kecil"],
+        correctAnswer: 1,
+        type: "text"
+      },
+      {
+        question: "Apakah warna daun pokok?",
+        options: ["Merah", "Biru", "Hijau", "Kuning"],
+        correctAnswer: 2,
+        type: "text"
+      },
+      {
+        question: "Pilih perkataan yang bermaksud 'tidak besar':",
+        options: ["Kecil", "Panjang", "Tinggi", "Lebar"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Berapa bilangan huruf dalam perkataan 'SELAMAT'?",
+        options: ["5", "6", "7", "8"],
+        correctAnswer: 2,
+        type: "text"
+      },
+      {
+        question: "Apakah buah ini?",
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M100,40 C130,40 160,60 160,120 C160,180 130,180 100,180 C70,180 40,180 40,120 C40,60 70,40 100,40 Z' fill='%23FFFF00'/%3E%3Cpath d='M100,40 C100,20 110,10 120,20' stroke='%23006400' stroke-width='6' fill='none'/%3E%3C/svg%3E",
+        options: ["Epal", "Pisang", "Oren", "Mangga"],
+        correctAnswer: 1,
+        type: "image"
+      },
+      {
+        question: "Pilih perkataan yang bermaksud 'tidak gelap':",
+        options: ["Hitam", "Terang", "Malam", "Hujan"],
+        correctAnswer: 1,
+        type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        image: "",
+        options: ["meja", "berlari", "tinggi"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Ali", "kereta", "meja"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["menulis", "meja", "besar"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["cantik", "lari", "kuda"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ nama kamu?",
+        image: "",
+        options: ["Siapa", "Bila", "Di mana"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan yang mempunyai imbuhan awalan:",
+        image: "",
+        options: ["bermain", "pantai", "besar"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan apitan:",
+        image: "",
+        options: ["permainan", "lari", "cantik"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan sinonim:",
+        image: "",
+        options: ["gembira - seronok", "gembira - sedih", "gembira - marah"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan antonim:",
+        image: "",
+        options: ["tinggi - rendah", "tinggi - besar", "tinggi - jauh"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata majmuk:",
+        image: "",
+        options: ["kaki lima", "bermain", "gelas"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri pertama:",
+        image: "",
+        options: ["saya", "dia", "mereka"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri kedua:",
+        image: "",
+        options: ["awak", "saya", "Ali"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata perintah yang betul:",
+        image: "",
+        options: ["Sila duduk.", "Saya duduk.", "Dia duduk."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata seru yang sesuai: ______, cantiknya bunga ini!",
+        image: "",
+        options: ["Wah", "Apa", "Bila"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih ayat yang betul:",
+        image: "",
+        options: ["Ali membaca buku.", "Membaca Ali buku.", "Buku membaca Ali."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["pendek", "makan", "meja"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan akhiran:",
+        image: "",
+        options: ["tulisan", "buku", "lari"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja yang betul:",
+        image: "",
+        options: ["menyapu", "pasu", "cantik"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu makan pagi tadi?",
+        image: "",
+        options: ["Apa", "Di mana", "Siapa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        image: "",
+        options: ["rumah", "berlari", "kuning"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Kuala Lumpur", "taman", "jalan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["melukis", "kertas", "indah"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["panas", "cawan", "berlari"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu pergi semalam?",
+        image: "",
+        options: ["Ke mana", "Apa", "Siapa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan awalan:",
+        image: "",
+        options: ["menyanyi", "lagu", "tinggi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan sinonim:",
+        image: "",
+        options: ["kuat - gagah", "kuat - lemah", "kuat - malas"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan antonim:",
+        image: "",
+        options: ["cepat - lambat", "cepat - rajin", "cepat - ringan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata majmuk:",
+        image: "",
+        options: ["rumah sakit", "berlari", "kerusi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri ketiga:",
+        image: "",
+        options: ["dia", "saya", "awak"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata perintah yang betul:",
+        image: "",
+        options: ["Tolong tutup pintu.", "Dia tutup pintu.", "Saya menutup pintu."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata seru yang sesuai: ______, cantiknya pemandangan ini!",
+        image: "",
+        options: ["Wah", "Apa", "Bila"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih ayat yang betul:",
+        image: "",
+        options: ["Emak memasak nasi.", "Masak nasi emak.", "Nasi emak masak."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["hitam", "bermain", "baju"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan yang berimbuhan akhiran:",
+        image: "",
+        options: ["berjalan", "makanan", "kerusi"],
+        correctAnswer: 1
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["membaca", "pensel", "tinggi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ yang menolong kamu?",
+        image: "",
+        options: ["Siapa", "Bila", "Apa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        image: "",
+        options: ["kereta", "Ali", "berlari"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Malaysia", "negara", "jalan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan apitan:",
+        image: "",
+        options: ["kebersihan", "bersih", "membasuh"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja yang betul:",
+        image: "",
+        options: ["menggosok", "gosokkan", "penggosok"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["wangi", "bunga", "membaca"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan antonim:",
+        image: "",
+        options: ["besar - kecil", "besar - panjang", "besar - tinggi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan sinonim:",
+        image: "",
+        options: ["bijak - pandai", "bijak - malas", "bijak - comel"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri pertama:",
+        image: "",
+        options: ["kami", "awak", "dia"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu tinggal sekarang?",
+        image: "",
+        options: ["Di mana", "Apa", "Siapa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata perintah:",
+        image: "",
+        options: ["Tolong tutup tingkap.", "Tingkap itu ditutup.", "Saya menutup tingkap."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan yang berimbuhan awalan:",
+        image: "",
+        options: ["menyapu", "sapu", "penyapu"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan yang berimbuhan akhiran:",
+        image: "",
+        options: ["bacaan", "membaca", "baca"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan yang berimbuhan apitan:",
+        image: "",
+        options: ["keamanan", "aman", "mengaman"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["menyiram", "siraman", "penyiram"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata majmuk:",
+        image: "",
+        options: ["kereta api", "kereta", "berapi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        image: "",
+        options: ["bunga", "Laila", "menari"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Pak Abu", "guru", "kerusi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih ayat yang betul:",
+        image: "",
+        options: ["Dia membaca buku cerita.", "Buku dia membaca cerita.", "Membaca cerita buku dia."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["licin", "meja", "bermain"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu ke sekolah semalam?",
+        image: "",
+        options: ["Mengapa", "Apa", "Siapa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan yang sesuai untuk menggantikan 'Ali dan saya':",
+        image: "",
+        options: ["kami", "mereka", "awak"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata seru yang sesuai: ______, besarnya rumah ini!",
+        image: "",
+        options: ["Wah", "Siapa", "Apa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["melompat", "lompat-lompat", "melompatkan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri ketiga:",
+        image: "",
+        options: ["dia", "kita", "saya"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        image: "",
+        options: ["basikal", "Ali", "Malaysia"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Putrajaya", "bandar", "taman"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["sejuk", "selimut", "makan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["menyanyi", "lagu", "indah"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu suka makan?",
+        image: "",
+        options: ["Apa", "Bila", "Siapa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih ayat yang betul:",
+        image: "",
+        options: ["Mereka pergi ke pasar.", "Pasar mereka pergi ke.", "Ke pasar pergi mereka."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan apitan:",
+        image: "",
+        options: ["perjalanan", "jalan", "berjalan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan sinonim:",
+        image: "",
+        options: ["pandai - bijak", "pandai - bodoh", "pandai - penat"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan antonim:",
+        image: "",
+        options: ["malas - rajin", "malas - tidur", "malas - pandai"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata majmuk:",
+        image: "",
+        options: ["rumah api", "api", "berumah"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata seru yang sesuai: ______, cepatnya kamu lari!",
+        image: "",
+        options: ["Wah", "Siapa", "Apa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata perintah yang betul:",
+        image: "",
+        options: ["Jangan bermain di jalan!", "Saya bermain di jalan.", "Dia bermain di jalan."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja yang betul:",
+        image: "",
+        options: ["memasak", "periuk", "panas"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan akhiran:",
+        image: "",
+        options: ["jualan", "menjual", "jual"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan yang mempunyai imbuhan awalan:",
+        image: "",
+        options: ["menyusun", "susun", "kerusi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Cikgu Nadia", "cikgu", "guru"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["laju", "kereta", "berjalan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu datang ke sekolah?",
+        image: "",
+        options: ["Bila", "Siapa", "Apa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri pertama:",
+        image: "",
+        options: ["saya", "awak", "dia"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata perintah:",
+        image: "",
+        options: ["Sila beratur di sini.", "Saya beratur di sini.", "Dia beratur di sini."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata majmuk:",
+        image: "",
+        options: ["tanggungjawab", "berjalan", "kerusi"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["menjahit", "benang", "kain"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["gemuk", "berlari", "baju"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        image: "",
+        options: ["buku", "Ahmad", "bermain"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Taman Mewah", "taman", "pokok"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu tidak hadir semalam?",
+        image: "",
+        options: ["Mengapa", "Siapa", "Bila"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih ayat yang betul:",
+        image: "",
+        options: ["Dia sedang membaca buku.", "Sedang buku dia membaca.", "Membaca dia buku sedang."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri kedua:",
+        image: "",
+        options: ["awak", "saya", "mereka"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata seru yang sesuai: ______, hebatnya kamu menari!",
+        image: "",
+        options: ["Wah", "Apa", "Bila"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan awalan:",
+        image: "",
+        options: ["melihat", "lihat", "penglihatan"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan akhiran:",
+        image: "",
+        options: ["bentukan", "membentuk", "bentuk"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih perkataan berimbuhan apitan:",
+        image: "",
+        options: ["kebenaran", "benar", "membenar"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan sinonim:",
+        image: "",
+        options: ["sihat - segar", "sihat - sakit", "sihat - letih"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih pasangan antonim:",
+        image: "",
+        options: ["cantik - hodoh", "cantik - manis", "cantik - besar"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata kerja:",
+        image: "",
+        options: ["menari", "penari", "tarian"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        image: "",
+        options: ["manis", "gula", "minum"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        image: "",
+        options: ["pokok", "Melaka", "berkebun"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        image: "",
+        options: ["Encik Lim", "guru", "pekerja"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata tanya yang sesuai: ______ kamu hendak ke kantin?",
+        image: "",
+        options: ["Bila", "Siapa", "Apa"],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata perintah:",
+        image: "",
+        options: ["Jangan buat bising.", "Dia buat bising.", "Saya tidak bising."],
+        correctAnswer: 0, type: "text"
+      },
+      {
+        question: "Pilih kata ganti nama diri ketiga:",
+        options: ["mereka", "saya", "awak"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Pilih kata kerja yang betul:",
+        options: ["menyapu", "sapu", "penyapu"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Pilih kata adjektif:",
+        options: ["cantik", "buku", "berlari"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Pilih kata nama am:",
+        options: ["meja", "Ali", "bermain"],
+        correctAnswer: 0,
+        type: "text"
+      },
+      {
+        question: "Pilih kata nama khas:",
+        options: ["Kuala Lumpur", "taman", "jalan"],
+        correctAnswer: 0,
+        type: "text"
+      }
+    ];
+
+    function randomizeQuestionOptions(questionObj) {
+      // Get the correct answer value based on the original index
+      const correctAnswerValue = questionObj.options[questionObj.correctAnswer];
+
+      // Create a copy of the options array to shuffle
+      const shuffledOptions = [...questionObj.options];
+
+      // Fisher-Yates shuffle algorithm
+      for (let i = shuffledOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+      }
+
+      // Find the new index of the correct answer in the shuffled array
+      const newCorrectAnswerIndex = shuffledOptions.indexOf(correctAnswerValue);
+
+      // Return the new question object with the shuffled options and updated correct answer index
+      return {
+        ...questionObj,
+        options: shuffledOptions,
+        correctAnswer: newCorrectAnswerIndex,
+      };
+    }
+
+    // Apply the randomization function to each question in the array
+    const randomizedQuestions = allQuestions.map(randomizeQuestionOptions);
+
+    // DOM elements
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const quizContainer = document.getElementById('quiz-container');
+    const resultsScreen = document.getElementById('results-screen');
+    const certificateScreen = document.getElementById('certificate-screen');
+    const startBtn = document.getElementById('start-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const tryAgainBtn = document.getElementById('try-again-btn');
+    const viewCertificateBtn = document.getElementById('view-certificate-btn');
+    const backToResultsBtn = document.getElementById('back-to-results-btn');
+    const downloadCertificateBtn = document.getElementById('download-certificate-btn');
+    const studentNameInput = document.getElementById('student-name');
+    const progressText = document.getElementById('progress-text');
+    const progressBar = document.getElementById('progress-bar');
+    const scoreText = document.getElementById('score-text');
+    const questionText = document.getElementById('question-text');
+    const questionImageContainer = document.getElementById('question-image-container');
+    const questionImage = document.getElementById('question-image');
+    const optionsContainer = document.getElementById('options-container');
+    const studentResult = document.getElementById('student-result');
+    const resultMessage = document.getElementById('result-message');
+    const resultsEmoji = document.getElementById('results-emoji');
+    const certificateName = document.getElementById('certificate-name');
+    const certificateDate = document.getElementById('certificate-date');
+
+    // Quiz state
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedOption = null;
+    let studentName = '';
+
+    // Initialize the quiz
+    startBtn.addEventListener('click', startQuiz);
+    nextBtn.addEventListener('click', goToNextQuestion);
+    tryAgainBtn.addEventListener('click', restartQuiz);
+    viewCertificateBtn.addEventListener('click', showCertificate);
+    backToResultsBtn.addEventListener('click', backToResults);
+    downloadCertificateBtn.addEventListener('click', downloadCertificate);
+
+    // Start the quiz
+    function startQuiz() {
+      studentName = studentNameInput.value.trim();
+      if (!studentName) {
+        studentName = 'Pelajar';
+      }
+
+      // Select 30 random questions
+      currentQuestions = getRandomQuestions(randomizedQuestions, 30);
+      currentQuestionIndex = 0;
+      score = 0;
+
+      welcomeScreen.classList.add('hidden');
+      quizContainer.classList.remove('hidden');
+
+      loadQuestion();
+    }
+
+    // Get random questions
+    function getRandomQuestions(questions, count) {
+      const shuffled = [...questions].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
+    }
+
+    // Load current question
+    function loadQuestion() {
+      const question = currentQuestions[currentQuestionIndex];
+      questionText.textContent = question.question;
+
+      // Update progress
+      progressText.textContent = `Soalan ${currentQuestionIndex + 1} / ${currentQuestions.length}`;
+      progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+
+      // Display image if available
+      if (question.type === 'image' && question.image) {
+        questionImage.src = question.image;
+        questionImageContainer.classList.remove('hidden');
+      } else {
+        questionImageContainer.classList.add('hidden');
+      }
+
+      // Clear options
+      optionsContainer.innerHTML = '';
+
+      // Add options
+      question.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'option bg-white border-2 border-gray-300 rounded-lg p-4 cursor-pointer hover:bg-gray-50';
+        optionElement.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold mr-3">
+                            ${String.fromCharCode(65 + index)}
+                        </div>
+                        <span>${option}</span>
+                    </div>
+                `;
+
+        optionElement.addEventListener('click', () => selectOption(optionElement, index));
+        optionsContainer.appendChild(optionElement);
+      });
+
+      // Reset next button
+      nextBtn.disabled = true;
+      nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      selectedOption = null;
+    }
+
+    // Select an option
+    function selectOption(optionElement, index) {
+      // If an answer is already selected, do nothing
+      if (selectedOption !== null) return;
+
+      const question = currentQuestions[currentQuestionIndex];
+      selectedOption = index;
+
+      // Remove selected class from all options
+      const options = optionsContainer.querySelectorAll('.option');
+      options.forEach(opt => opt.classList.remove('selected'));
+
+      // Add selected class to clicked option
+      optionElement.classList.add('selected');
+
+      // Check if answer is correct
+      if (index === question.correctAnswer) {
+        optionElement.classList.add('correct');
+        score++;
+        scoreText.textContent = `Markah: ${score}`;
+      } else {
+        optionElement.classList.add('incorrect');
+        // Show correct answer
+        options[question.correctAnswer].classList.add('correct');
+      }
+
+      // Enable next button
+      nextBtn.disabled = false;
+      nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+
+    // Go to next question
+    function goToNextQuestion() {
+      currentQuestionIndex++;
+
+      if (currentQuestionIndex < currentQuestions.length) {
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    // Show results
+    function showResults() {
+      quizContainer.classList.add('hidden');
+      resultsScreen.classList.remove('hidden');
+
+      const perfectScore = score === currentQuestions.length;
+
+      studentResult.textContent = `${studentName}, anda telah mendapat ${score}/${currentQuestions.length}!`;
+
+      if (perfectScore) {
+        resultsEmoji.textContent = '🎉';
+        resultMessage.textContent = 'Tahniah! Anda sangat hebat!';
+        viewCertificateBtn.classList.remove('hidden');
+
+        // Trigger confetti for perfect score
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      } else if (score >= currentQuestions.length / 2) {
+        resultsEmoji.textContent = '😊';
+        resultMessage.textContent = 'Bagus! Teruskan usaha anda!';
+        viewCertificateBtn.classList.add('hidden');
+      } else {
+        resultsEmoji.textContent = '😢';
+        resultMessage.textContent = 'Jangan putus asa! Cuba lagi!';
+        viewCertificateBtn.classList.add('hidden');
+      }
+    }
+
+    // Show certificate
+    function showCertificate() {
+      resultsScreen.classList.add('hidden');
+      certificateScreen.classList.remove('hidden');
+
+      // Set certificate details
+      certificateName.textContent = studentName;
+
+      const today = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      certificateDate.textContent = today.toLocaleDateString('ms-MY', options);
+
+      // Trigger confetti again
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    // Back to results
+    function backToResults() {
+      certificateScreen.classList.add('hidden');
+      resultsScreen.classList.remove('hidden');
+    }
+
+    // Restart quiz
+    function restartQuiz() {
+      resultsScreen.classList.add('hidden');
+      certificateScreen.classList.add('hidden');
+
+      // Select new random questions
+      currentQuestions = getRandomQuestions(randomizedQuestions, 30);
+      currentQuestionIndex = 0;
+      score = 0;
+      scoreText.textContent = `Markah: ${score}`;
+
+      quizContainer.classList.remove('hidden');
+      loadQuestion();
+    }
+
+    // Download certificate
+    function downloadCertificate() {
+      // In a real environment, this would use html2canvas or similar
+      // For this demo, we'll just show an alert
+      // alert('Dalam persekitaran sebenar, sijil akan dimuat turun sebagai imej.');
+      const certificateElement = document.getElementById("certificate");
+      html2canvas(certificateElement, { scale: 2 }).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "certificate.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'955aa50a9072e53f',t:'MTc1MDkxOTMwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+
+</html>
