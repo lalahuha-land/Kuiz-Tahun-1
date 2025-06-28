@@ -12,32 +12,36 @@
     <h1 class="text-2xl font-bold text-gray-800 mb-2">🔐 Log Masuk Diperlukan</h1>
     <p class="mb-6 text-gray-600">Sila log masuk untuk mengakses kuiz Tahun 1.</p>
 
-    <!-- SINGLE BUTTON ONLY -->
-    <div data-netlify-identity-button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg inline-block">
+    <!-- ✅ MANUAL LOGIN BUTTON -->
+    <button id="manual-login" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
       Log Masuk / Daftar Akaun
-    </div>
+    </button>
 
     <p class="text-sm text-gray-400 mt-4">Anda akan diarahkan semula selepas log masuk.</p>
   </div>
 
-  <!-- ✅ SCRIPT THAT REDIRECTS AFTER LOGIN -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      if (window.netlifyIdentity) {
-        netlifyIdentity.on("init", (user) => {
-          if (user) {
-            // Already logged in
-            window.location.href = "index.html";
-          } else {
-            // Wait for login event
-            netlifyIdentity.on("login", () => {
-              window.location.href = "index.html";
-            });
-          }
-        });
+      // Init the identity widget
+      netlifyIdentity.init();
 
-        netlifyIdentity.init(); // required
-      }
+      // If already logged in, redirect
+      netlifyIdentity.on("init", (user) => {
+        if (user) {
+          window.location.href = "index.html";
+        }
+      });
+
+      // After login, redirect to index
+      netlifyIdentity.on("login", () => {
+        window.location.href = "index.html";
+      });
+
+      // Trigger the login/signup modal manually
+      const loginButton = document.getElementById("manual-login");
+      loginButton.addEventListener("click", () => {
+        netlifyIdentity.open();
+      });
     });
   </script>
 </body>
